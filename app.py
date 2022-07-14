@@ -18,12 +18,13 @@ app = Flask(__name__)
 # you need to migrate from old pickle to new by using
 # StatePickleStorage().convert_old_to_new()
 
+TOKEN = "1841726998:xxxxxxxxxxxxx"
 
 
 # Now, you can pass storage to bot.
 state_storage = StateMemoryStorage() # you can init here another storage
 
-bot = telebot.TeleBot("1841726998:xxxxxxxxxxxxx",
+bot = telebot.TeleBot(TOKEN,
 state_storage=state_storage)
 
 
@@ -103,7 +104,7 @@ def age_incorrect(message):
 bot.add_custom_filter(custom_filters.StateFilter(bot))
 bot.add_custom_filter(custom_filters.IsDigitFilter())
 
-@app.route('/' + "1841726998:xxxxxxx", methods=['POST'])
+@app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
     json_string = request.get_data().decode('utf-8')
     update = telebot.types.Update.de_json(json_string)
@@ -114,5 +115,5 @@ def getMessage():
 @app.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://testwebhook.domain.dev/' + "1841726998:xxxxxxxxxxxxxxx")
+    bot.set_webhook(url='https://testwebhook.domain.dev/' + TOKEN)
     return "!", 200
