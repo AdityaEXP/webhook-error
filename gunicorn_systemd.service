@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve testwebhook
+After=network.target
+
+[Service]
+User=aditya
+Group=www-data
+WorkingDirectory=/home/aditya/testwebhook
+Environment="PATH=/home/aditya/testwebhook/.env/bin"
+ExecStart=/home/aditya/testwebhook/.env/bin/gunicorn --workers 3 --bind unix:testwebhook.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
+            
